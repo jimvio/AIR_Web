@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DriverMapper">
+  <resultMap id="BaseResultMap" type="entity.Driver">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="id_number" jdbcType="VARCHAR" property="idNumber" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="car_number" jdbcType="VARCHAR" property="carNumber" />
+    <result column="car_style" jdbcType="VARCHAR" property="carStyle" />
+    <result column="car_brand" jdbcType="VARCHAR" property="carBrand" />
+    <result column="car_color" jdbcType="VARCHAR" property="carColor" />
+    <result column="vin" jdbcType="VARCHAR" property="vin" />
+    <result column="engine_no" jdbcType="VARCHAR" property="engineNo" />
+    <result column="manufacture_date" jdbcType="TIMESTAMP" property="manufactureDate" />
+    <result column="issue_date" jdbcType="TIMESTAMP" property="issueDate" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="idcar_front" jdbcType="VARCHAR" property="idcarFront" />
+    <result column="idcar_back" jdbcType="VARCHAR" property="idcarBack" />
+    <result column="driving_license" jdbcType="VARCHAR" property="drivingLicense" />
+    <result column="vehicle_register" jdbcType="VARCHAR" property="vehicleRegister" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, employee_id, username, password, name, phone, id_number, status, car_number, 
+    car_style, car_brand, car_color, vin, engine_no, manufacture_date, issue_date, type, 
+    idcar_front, idcar_back, driving_license, vehicle_register
+  </sql>
+  <select id="selectByExample" parameterType="entity.DriverExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from driver
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from driver
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="entity.DriverExample">
+    delete from driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="entity.Driver">
+    insert into driver (id, employee_id, username, 
+      password, name, phone, 
+      id_number, status, car_number, 
+      car_style, car_brand, car_color, 
+      vin, engine_no, manufacture_date, 
+      issue_date, type, idcar_front, 
+      idcar_back, driving_license, vehicle_register
+      )
+    values (#{id,jdbcType=INTEGER}, #{employeeId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{idNumber,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{carNumber,jdbcType=VARCHAR}, 
+      #{carStyle,jdbcType=VARCHAR}, #{carBrand,jdbcType=VARCHAR}, #{carColor,jdbcType=VARCHAR}, 
+      #{vin,jdbcType=VARCHAR}, #{engineNo,jdbcType=VARCHAR}, #{manufactureDate,jdbcType=TIMESTAMP}, 
+      #{issueDate,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{idcarFront,jdbcType=VARCHAR}, 
+      #{idcarBack,jdbcType=VARCHAR}, #{drivingLicense,jdbcType=VARCHAR}, #{vehicleRegister,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.Driver">
+    insert into driver
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="idNumber != null">
+        id_number,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="carNumber != null">
+        car_number,
+      </if>
+      <if test="carStyle != null">
+        car_style,
+      </if>
+      <if test="carBrand != null">
+        car_brand,
+      </if>
+      <if test="carColor != null">
+        car_color,
+      </if>
+      <if test="vin != null">
+        vin,
+      </if>
+      <if test="engineNo != null">
+        engine_no,
+      </if>
+      <if test="manufactureDate != null">
+        manufacture_date,
+      </if>
+      <if test="issueDate != null">
+        issue_date,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="idcarFront != null">
+        idcar_front,
+      </if>
+      <if test="idcarBack != null">
+        idcar_back,
+      </if>
+      <if test="drivingLicense != null">
+        driving_license,
+      </if>
+      <if test="vehicleRegister != null">
+        vehicle_register,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carStyle != null">
+        #{carStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="carBrand != null">
+        #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null">
+        #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNo != null">
+        #{engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureDate != null">
+        #{manufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issueDate != null">
+        #{issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="idcarFront != null">
+        #{idcarFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idcarBack != null">
+        #{idcarBack,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingLicense != null">
+        #{drivingLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleRegister != null">
+        #{vehicleRegister,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="entity.DriverExample" resultType="java.lang.Long">
+    select count(*) from driver
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update driver
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.employeeId != null">
+        employee_id = #{record.employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null">
+        id_number = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carNumber != null">
+        car_number = #{record.carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carStyle != null">
+        car_style = #{record.carStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carBrand != null">
+        car_brand = #{record.carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carColor != null">
+        car_color = #{record.carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vin != null">
+        vin = #{record.vin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.engineNo != null">
+        engine_no = #{record.engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufactureDate != null">
+        manufacture_date = #{record.manufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.issueDate != null">
+        issue_date = #{record.issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcarFront != null">
+        idcar_front = #{record.idcarFront,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcarBack != null">
+        idcar_back = #{record.idcarBack,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drivingLicense != null">
+        driving_license = #{record.drivingLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vehicleRegister != null">
+        vehicle_register = #{record.vehicleRegister,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update driver
+    set id = #{record.id,jdbcType=INTEGER},
+      employee_id = #{record.employeeId,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      id_number = #{record.idNumber,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      car_number = #{record.carNumber,jdbcType=VARCHAR},
+      car_style = #{record.carStyle,jdbcType=VARCHAR},
+      car_brand = #{record.carBrand,jdbcType=VARCHAR},
+      car_color = #{record.carColor,jdbcType=VARCHAR},
+      vin = #{record.vin,jdbcType=VARCHAR},
+      engine_no = #{record.engineNo,jdbcType=VARCHAR},
+      manufacture_date = #{record.manufactureDate,jdbcType=TIMESTAMP},
+      issue_date = #{record.issueDate,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      idcar_front = #{record.idcarFront,jdbcType=VARCHAR},
+      idcar_back = #{record.idcarBack,jdbcType=VARCHAR},
+      driving_license = #{record.drivingLicense,jdbcType=VARCHAR},
+      vehicle_register = #{record.vehicleRegister,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.Driver">
+    update driver
+    <set>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null">
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="carNumber != null">
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carStyle != null">
+        car_style = #{carStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="carBrand != null">
+        car_brand = #{carBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null">
+        car_color = #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="vin != null">
+        vin = #{vin,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNo != null">
+        engine_no = #{engineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureDate != null">
+        manufacture_date = #{manufactureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issueDate != null">
+        issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="idcarFront != null">
+        idcar_front = #{idcarFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idcarBack != null">
+        idcar_back = #{idcarBack,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingLicense != null">
+        driving_license = #{drivingLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleRegister != null">
+        vehicle_register = #{vehicleRegister,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.Driver">
+    update driver
+    set employee_id = #{employeeId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      car_number = #{carNumber,jdbcType=VARCHAR},
+      car_style = #{carStyle,jdbcType=VARCHAR},
+      car_brand = #{carBrand,jdbcType=VARCHAR},
+      car_color = #{carColor,jdbcType=VARCHAR},
+      vin = #{vin,jdbcType=VARCHAR},
+      engine_no = #{engineNo,jdbcType=VARCHAR},
+      manufacture_date = #{manufactureDate,jdbcType=TIMESTAMP},
+      issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      idcar_front = #{idcarFront,jdbcType=VARCHAR},
+      idcar_back = #{idcarBack,jdbcType=VARCHAR},
+      driving_license = #{drivingLicense,jdbcType=VARCHAR},
+      vehicle_register = #{vehicleRegister,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
